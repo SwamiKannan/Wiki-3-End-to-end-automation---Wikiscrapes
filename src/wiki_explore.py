@@ -107,7 +107,6 @@ def clean_name(name):
 
 def write_out(c1tq, data_path, arg_shutdown):
     global count_files
-    # print('Writing out')
     while not (arg_shutdown and c1tq.empty()):
         details = c1tq.get()
         outfile_name = details['page']
@@ -126,7 +125,8 @@ def display(epnq, xcq, ctq, c1tq, rxq):
     global count_files
     while True:
         print(
-            "Queue sizes: pages_queue={0} xml_queue={1} content_queue={2} cleaned_queue={3} raw_xml_queue={4} files created={5}".format(
+            "Queue sizes: pages_queue={0} xml_queue={1} content_queue={2} cleaned_queue={3} raw_xml_queue={4} files "
+            "created={5}".format(
                 epnq.qsize(),
                 xcq.qsize(),
                 ctq.qsize(),
@@ -149,7 +149,7 @@ def get_content(epnq, xcq, rxq, arg_shutdown):
                     xcq.put((page_name, page_url, response.content))
                     rxq.put((page_name, response.content))
                 elif response.status_code == 429:
-                    print('Overloaded response from Wikipedia. Pausing requests...')
+                    print('Wikipedia overloaded with our request for pages. Pausing requests...')
                     epnq.put((page_name, page_url))
                     time.sleep(30)
                 else:
