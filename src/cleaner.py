@@ -1,7 +1,7 @@
 import re
 
 
-class Cleaner():
+class Cleaner:
 
     def __init__(self):
         pass
@@ -14,7 +14,6 @@ class Cleaner():
         text = self._remove_emphasises(text)
         text = self._remove_comments(text)
         text = self._remove_langs(text)
-        # text = self._remove_titles(text)
         text = self._remove_choices(text)
         text = self._remove_templates(text)
         text = self._remove_htmls(text)
