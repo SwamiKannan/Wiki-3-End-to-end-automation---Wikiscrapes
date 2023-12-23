@@ -6,7 +6,6 @@ from wiki_explore import process_article, write_out, display, get_content, extra
 from parse_utils import check_link_format, get_page_names
 import argparse
 import settings
-from cleaner import Cleaner
 import os
 from file_utils import initiate_file_opens
 
@@ -46,7 +45,7 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     shutdown = False
-    c = Cleaner()
+    # c = Cleaner()
     manager = multiprocessing.Manager()
     settings.init()
     updated_output_dir = initiate_file_opens(output_dir, parent_url)
@@ -78,7 +77,7 @@ if __name__ == "__main__":
     processing_processes = {}  # Threads to clean the data
     for i in range(2):
         processing_processes[i] = Process(target=process_article,
-                                          args=(content_text_queue, cleaned_text_queue, c, shutdown))
+                                          args=(content_text_queue, cleaned_text_queue, shutdown))
         processing_processes[i].start()
 
     # Threads to write data to disk
