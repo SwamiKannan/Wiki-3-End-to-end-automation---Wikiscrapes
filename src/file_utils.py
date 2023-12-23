@@ -28,6 +28,7 @@ def check_paths(output_dir):
 
 
 def open_files(primary_url, output_dir):
+    print('\n\n\n')
     print('****** STATUS OF FILES *******')
     output_dir = output_dir if output_dir else ''
 
