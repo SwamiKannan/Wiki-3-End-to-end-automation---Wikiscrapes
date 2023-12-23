@@ -1,3 +1,6 @@
+
+#Credit: # Base cleaner.py code from https://github.com/CyberZHG Git repo:
+# https://github.com/CyberZHG/wiki-dump-reader/blob/master/wiki_dump_reader/cleaner.py
 import re
 
 
