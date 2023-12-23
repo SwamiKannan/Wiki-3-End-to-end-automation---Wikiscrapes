@@ -16,6 +16,7 @@ replacements = {'[[': '', ']]': '', '==': ''}
 file_path = "..//physics//data//text_files"
 count_files = len(os.listdir(file_path)) if os.path.exists(file_path) else 0
 
+
 # Implementation of the WikiReader class from https://jamesthorne.com/blog/processing-wikipedia-in-a-couple-of-hours/
 class WikiReader(xml.sax.ContentHandler):
     def __init__(self, ns_filter, callback, link):
@@ -85,8 +86,6 @@ def process_text(text):
 
 
 def process_article(ctq, c1tq, cleaner, arg_shutdown):
-    # print('Initiated processing')
-    # print('Process article status: ', not (arg_shutdown and aq.empty()))
     while not (arg_shutdown and ctq.empty()):
         page_title, doc, link = ctq.get()
         text = cleaner.clean_text(doc)
