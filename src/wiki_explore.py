@@ -5,6 +5,7 @@ import time
 import os
 import json
 import re
+from cleaner import clean_text
 
 logger = logging.getLogger(__name__)
 re_mode = 0
@@ -85,10 +86,10 @@ def process_text(text):
     return text, result_cat
 
 
-def process_article(ctq, c1tq, cleaner, arg_shutdown):
+def process_article(ctq, c1tq, arg_shutdown):
     while not (arg_shutdown and ctq.empty()):
         page_title, doc, link = ctq.get()
-        text = cleaner.clean_text(doc)
+        text = clean_text(doc)
         text, categories = process_text(text)
         if "REDIRECT ".upper() not in text:
             try:
