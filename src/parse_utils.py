@@ -247,16 +247,6 @@ def process_depth_page(url, depth, parent_url, max_page_limit, max_category_limi
     return None
 
 
-def get_page_names(url, parent_url, mpl, mcl, depth, epnq):
-    if not depth:
-        process_no_depth_page(url, parent_url, mpl, mcl, epnq)
-    else:
-        process_depth_page(parent_url, depth, parent_url, mpl, mcl, epnq)
-    write_files()
-    for f in [settings.fcn, settings.fcl, settings.fdl, settings.fpl, settings.fpn]:
-        f.close()
-
-
 def process_no_depth_page(url, parent_url, max_page_limit, max_category_limit, epnq):
     file_limit = False
     child_cat, child_cat_links, child_page, child_page_links, child_done_links = process_page(url, parent_url, epnq)
@@ -268,3 +258,12 @@ def process_no_depth_page(url, parent_url, max_page_limit, max_category_limit, e
     write_files()
     return None
 
+
+def get_page_names(url, parent_url, mpl, mcl, depth, epnq):
+    if not depth:
+        process_no_depth_page(url, parent_url, mpl, mcl, epnq)
+    else:
+        process_depth_page(parent_url, depth, parent_url, mpl, mcl, epnq)
+    write_files()
+    for f in [settings.fcn, settings.fcl, settings.fdl, settings.fpl, settings.fpn]:
+        f.close()
