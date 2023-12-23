@@ -79,7 +79,6 @@ class Cleaner:
                       flags=re.IGNORECASE | re.DOTALL)
         text = re.sub(r'<ref.*?</ref>', '', text,
                       flags=re.IGNORECASE | re.DOTALL)
-        # text = re.sub(r'{{Refbegin.*?Refend}}', '', text, flags=re.IGNORECASE | re.DOTALL)
         return text
 
     def _remove_emphasises(self, text):
