@@ -257,20 +257,6 @@ def get_page_names(url, parent_url, mpl, mcl, depth, epnq):
         f.close()
 
 
-# def process_depth_page(url, depth, parent_url, max_page_limit, max_category_limit):
-#     file_limit = False
-#     child_cat, child_cat_links, child_page, child_page_links, child_done_links = process_page(url, parent_url,max_page_limit, max_category_limit)
-#     print('Primary', child_cat_links)
-#     update_settings(child_cat, child_cat_links, child_page, child_page_links, child_done_links)
-#     i = 0
-#     child_depth_links = []
-#     while i < depth and len(settings.cat_links - settings.done_links) > 0 and not file_limit:
-#         file_limit, i = process_all_pages(child_depth_links, child_cat_links, max_category_limit, max_page_limit,
-#                                           parent_url, i)
-#     write_files()
-#     return None
-
-
 def process_no_depth_page(url, parent_url, max_page_limit, max_category_limit, epnq):
     file_limit = False
     child_cat, child_cat_links, child_page, child_page_links, child_done_links = process_page(url, parent_url, epnq)
