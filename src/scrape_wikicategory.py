@@ -2,8 +2,7 @@ from multiprocessing import Process
 import multiprocessing
 import logging
 from threading import Thread
-from wiki_explore import WikiReader, process_article, write_out, display, get_content, extract_content, \
-    write_raw_data
+from wiki_explore import process_article, write_out, display, get_content, extract_content, write_raw_data
 from parse_utils import check_link_format, get_page_names
 import argparse
 import settings
