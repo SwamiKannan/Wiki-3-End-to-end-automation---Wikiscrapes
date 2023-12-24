@@ -1,8 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
-import settings
 from file_utils import write_files
 import time
+from wiki_explore import clean_name
+import settings
 
 
 def check_link_format(link):
@@ -151,7 +152,9 @@ def get_pages(pages_section, epnq):
         page_name, page_url = page.find('a').contents[0], (page.find('a'))['href']
         pages_list.add(page_name)
         pages_link_list.add(page_url)
-        epnq.put((str(page_name), page_url))
+        page_name_clean = clean_name(page_name)
+        if page_name_clean not in settings.text_files:
+            epnq.put((str(page_name), page_url))
 
     return pages_list, pages_link_list
 
@@ -184,7 +187,7 @@ def update_settings(child_cat, child_cat_links, child_page, child_page_links, ch
 
 
 def process_all_pages(child_depth_links, max_category_limit, max_page_limit, parent_url, i, epnq):
-    if epnq.qsize() > 80000:  # to ensure that the epnq queue does not get overloaded
+    if epnq.qsize() > 0.8 * settings.MAXSIZE_EPNQ:  # to ensure that the epnq queue does not get jammed
         time.sleep(10)
     print('Depth:', i)
     file_limit = False
