@@ -2,7 +2,7 @@ from multiprocessing import Process
 import multiprocessing
 import logging
 from threading import Thread
-from wiki_explore import process_article, write_out, display, get_content, extract_content, write_raw_data
+from wiki_explore import process_article, write_out, display, get_content, extract_content, write_xml_data
 from parse_utils import check_link_format, get_page_names
 import argparse
 import settings
@@ -48,10 +48,11 @@ if __name__ == "__main__":
     manager = multiprocessing.Manager()
     settings.init()
     updated_output_dir = initiate_file_opens(output_dir, parent_url)
-    RAW_DATA_PATH = os.path.join(updated_output_dir, 'xml_files')
+    XML_DATA_PATH = os.path.join(updated_output_dir, 'xml_files')
     PROCESSED_DATA_PATH = os.path.join(updated_output_dir, 'text_files')
     settings.MAXSIZE_EPNQ = 100000
     settings.MAXSIZE_EOQ = 5000
+    settings.text_files = [x[:-4] for x in os.listdir(PROCESSED_DATA_PATH)] # Remove XML file extension from file name.
 
     extracted_page_name_queue = manager.Queue(maxsize=settings.MAXSIZE_EPNQ)
     xml_content_queue = manager.Queue(maxsize=settings.MAXSIZE_EOQ)
@@ -60,7 +61,7 @@ if __name__ == "__main__":
     raw_xml_queue = manager.Queue(maxsize=settings.MAXSIZE_EOQ)
 
     status = Thread(target=display, args=(extracted_page_name_queue, xml_content_queue, content_text_queue,
-                                          cleaned_text_queue, raw_xml_queue))
+                                          cleaned_text_queue, raw_xml_queue,shutdown))
     status.start()
 
     get_pages = {}  # Download the XML file from the net
@@ -81,7 +82,7 @@ if __name__ == "__main__":
         processing_processes[i].start()
 
     # Threads to write data to disk
-    writing_final_process={}
+    writing_final_process = {}
     for i in range(5):
         writing_final_process[i] = Thread(target=write_out, args=(cleaned_text_queue, PROCESSED_DATA_PATH, shutdown))
         writing_final_process[i].start()
@@ -89,7 +90,7 @@ if __name__ == "__main__":
     # Threads to write xml to disk
     writing_xml_processes = {}
     for i in range(5):
-        writing_xml_processes[i] = Thread(target=write_raw_data, args=(raw_xml_queue, RAW_DATA_PATH, shutdown))
+        writing_xml_processes[i] = Thread(target=write_xml_data, args=(raw_xml_queue, XML_DATA_PATH, shutdown))
         writing_xml_processes[i].start()
 
     parent_url = check_link_format(url)
