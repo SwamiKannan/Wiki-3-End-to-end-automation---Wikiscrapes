@@ -201,7 +201,7 @@ def process_all_pages(child_depth_links, max_category_limit, max_page_limit, par
         if child_page: child_page_depth.update(child_page)
         if child_page_links: child_page_links_depth.update(child_page_links)
         if child_done_links: child_done_links_depth.update(child_done_links)
-        time.sleep(i * 1.2)
+        time.sleep(len(child_depth_links) * 0.005)
     child_depth_links.update(child_cat_links_depth)
     child_depth_links -= child_done_links_depth
     update_settings(child_cat_depth, child_cat_links_depth, child_page_depth, child_page_links_depth,
