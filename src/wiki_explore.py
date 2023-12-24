@@ -6,6 +6,7 @@ import os
 import json
 import re
 from cleaner import clean_text
+import settings
 
 logger = logging.getLogger(__name__)
 re_mode = 0
@@ -14,8 +15,6 @@ replacements = {'[[': '', ']]': '', '==': ''}
 # cleaner.py from https://github.com/CyberZHG Git repo:
 # https://github.com/CyberZHG/wiki-dump-reader/blob/master/wiki_dump_reader/cleaner.py
 
-file_path = "..//physics//data//text_files"
-count_files = len(os.listdir(file_path)) if os.path.exists(file_path) else 0
 
 
 # Implementation of the WikiReader class from https://jamesthorne.com/blog/processing-wikipedia-in-a-couple-of-hours/
@@ -99,32 +98,15 @@ def process_article(ctq, c1tq, arg_shutdown):
 
 
 def clean_name(name):
-    replace_list = [':', ' ', '/', ')', '(', '\\', '\/', '?', '*']
+    replace_list = [':', ' ', '/', ')', '(', '\\', '\/', '?', '*', '"', "'"]
     for item in replace_list:
         while item in name:
             name = name.replace(item, '_')
     return name
 
 
-def write_out(c1tq, data_path, arg_shutdown):
-    global count_files
-    while not (arg_shutdown and c1tq.empty()):
-        details = c1tq.get()
-        outfile_name = details['page']
-        name = clean_name(outfile_name)
-        line = json.dumps(details, ensure_ascii=False).encode("utf-8")
-        if not os.path.exists(os.path.join(data_path, name + '.txt')):
-            try:
-                with open(os.path.join(data_path, name + '.txt'), "w+") as f:
-                    f.write("%s\r\n" % line.strip())
-                count_files += 1
-            except FileNotFoundError as e:
-                print('Error in text file name format: ', outfile_name)
-
-
-def display(epnq, xcq, ctq, c1tq, rxq):
-    global count_files
-    while True:
+def display(epnq, xcq, ctq, c1tq, rxq, arg_shutdown):
+    while not arg_shutdown:
         print(
             "Queue sizes: pages_queue={0} xml_queue={1} content_queue={2} cleaned_queue={3} raw_xml_queue={4} files "
             "created={5}".format(
@@ -133,7 +115,7 @@ def display(epnq, xcq, ctq, c1tq, rxq):
                 ctq.qsize(),
                 c1tq.qsize(),
                 rxq.qsize(),
-                count_files
+                settings.count_files
             ))
         time.sleep(1)
 
@@ -169,13 +151,22 @@ def extract_content(xcq, ctq, arg_shutdown):
             xml.sax.parseString(content, sample_reader)
 
 
-def write_raw_data(rxq, data_path, arg_shutdown):
+def write_xml_data(rxq, data_path, arg_shutdown):
     while not (arg_shutdown and rxq.empty()):
         name, content = rxq.get()
         name = clean_name(name)
-        try:
+        if not os.path.exists(os.path.join(data_path, name + '.xml')):
             with open(os.path.join(data_path, name + '.xml'), 'wb') as f:
                 f.write(content)
-        except FileNotFoundError as e:
-            print('Error in raw file name format: ', name)
 
+
+def write_out(c1tq, data_path, arg_shutdown):
+    while not (arg_shutdown and c1tq.empty()):
+        details = c1tq.get()
+        outfile_name = details['page']
+        name = clean_name(outfile_name)
+        line = json.dumps(details, ensure_ascii=False).encode("utf-8")
+        if not os.path.exists(os.path.join(data_path, name + '.txt')):
+            with open(os.path.join(data_path, name + '.txt'), "w") as f:
+                f.write("%s\r\n" % line.strip())
+                settings.count_files += 1
