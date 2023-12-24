@@ -8,6 +8,7 @@ import argparse
 import settings
 import os
 from file_utils import initiate_file_opens
+from hanging_threads import start_monitoring
 
 args_parser = argparse.ArgumentParser()
 args_parser.add_argument('parent_link', help='The parent category page from where the crawling will begin. Such urls '
@@ -92,6 +93,8 @@ if __name__ == "__main__":
     for i in range(5):
         writing_xml_processes[i] = Thread(target=write_xml_data, args=(raw_xml_queue, XML_DATA_PATH, shutdown))
         writing_xml_processes[i].start()
+
+    monitoring_thread = start_monitoring(seconds_frozen=20, test_interval=100)
 
     parent_url = check_link_format(url)
     get_page_names(url, parent_url, mcl, mpl, depth, extracted_page_name_queue)
