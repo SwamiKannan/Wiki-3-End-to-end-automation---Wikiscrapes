@@ -45,19 +45,19 @@ logger = logging.getLogger(__name__)
 
 if __name__ == "__main__":
     shutdown = False
-    # c = Cleaner()
     manager = multiprocessing.Manager()
     settings.init()
     updated_output_dir = initiate_file_opens(output_dir, parent_url)
     RAW_DATA_PATH = os.path.join(updated_output_dir, 'xml_files')
     PROCESSED_DATA_PATH = os.path.join(updated_output_dir, 'text_files')
-    count_files = len(os.listdir(PROCESSED_DATA_PATH))
+    settings.MAXSIZE_EPNQ = 100000
+    settings.MAXSIZE_EOQ = 5000
 
-    extracted_page_name_queue = manager.Queue(maxsize=100000)
-    xml_content_queue = manager.Queue(maxsize=5000)
-    content_text_queue = manager.Queue(maxsize=5000)
-    cleaned_text_queue = manager.Queue(maxsize=5000)
-    raw_xml_queue = manager.Queue(maxsize=5000)
+    extracted_page_name_queue = manager.Queue(maxsize=settings.MAXSIZE_EPNQ)
+    xml_content_queue = manager.Queue(maxsize=settings.MAXSIZE_EOQ)
+    content_text_queue = manager.Queue(maxsize=settings.MAXSIZE_EOQ)
+    cleaned_text_queue = manager.Queue(maxsize=settings.MAXSIZE_EOQ)
+    raw_xml_queue = manager.Queue(maxsize=settings.MAXSIZE_EOQ)
 
     status = Thread(target=display, args=(extracted_page_name_queue, xml_content_queue, content_text_queue,
                                           cleaned_text_queue, raw_xml_queue))
@@ -69,10 +69,10 @@ if __name__ == "__main__":
                                args=(extracted_page_name_queue, xml_content_queue, raw_xml_queue, shutdown))
         get_pages[i].start()
 
-    retrieval_threads = {}  # Threads to get the content from the xml file
+    retrieval_processes = {}  # Threads to get the content from the xml file
     for i in range(1):
-        retrieval_threads[i] = Process(target=extract_content, args=(xml_content_queue, content_text_queue, shutdown))
-        retrieval_threads[i].start()
+        retrieval_processes[i] = Process(target=extract_content, args=(xml_content_queue, content_text_queue, shutdown))
+        retrieval_processes[i].start()
 
     processing_processes = {}  # Threads to clean the data
     for i in range(2):
@@ -86,10 +86,11 @@ if __name__ == "__main__":
         writing_final_process[i] = Thread(target=write_out, args=(cleaned_text_queue, PROCESSED_DATA_PATH, shutdown))
         writing_final_process[i].start()
 
-    writing_raw_process = {}
+    # Threads to write xml to disk
+    writing_xml_processes = {}
     for i in range(5):
-        writing_raw_process[i] = Thread(target=write_raw_data, args=(raw_xml_queue, RAW_DATA_PATH, shutdown))
-        writing_raw_process[i].start()
+        writing_xml_processes[i] = Thread(target=write_raw_data, args=(raw_xml_queue, RAW_DATA_PATH, shutdown))
+        writing_xml_processes[i].start()
 
     parent_url = check_link_format(url)
     get_page_names(url, parent_url, mcl, mpl, depth, extracted_page_name_queue)
