@@ -32,3 +32,10 @@ Through the command window, navigate to the git folder and run:
 ```
 pip install -r requirements.txt
 ```
+#### Note 1: This assumes that you have already python, and the pip and git libraries installed.
+
+### 3. Decide your parameters
+1. Get the URL from where you want to scrape the subcategories and pages. This URL must be a **category** page in Wikipedia i.e. URL of the format: **https://en.wikipedia.org/wiki/Category:**
+2. Decide on the maximum number of sub-categories you would like to scrape (optional)
+3. Decide on the maximum number of page names you would like to extract (optional)
+4. Decide on the depth of the category tree that you would like to extract the page names for (depth is explained in the cover image above)
