@@ -39,3 +39,10 @@ pip install -r requirements.txt
 2. Decide on the maximum number of sub-categories you would like to scrape (optional)
 3. Decide on the maximum number of page names you would like to extract (optional)
 4. Decide on the depth of the category tree that you would like to extract the page names for (depth is explained in the cover image above)
+   
+#### Note 2: If you provide (2), (3) and (4), which ever criteria is met first will halt the scraping
+#### Note 3: If you do not provide (2) or (3) or (4) above, the script will keep running until all subcategories are exhausted. This is not recommended since within 7 levels of depth, you can go from Physics to Selena Gomez' We Own the Night Tour page as below:
+   <p align = "center">
+   <img src="https://github.com/SwamiKannan/Scraping_Wikipedia_categories/blob/main/images/depth_gone_wrong.png">
+   </p>
+ 
