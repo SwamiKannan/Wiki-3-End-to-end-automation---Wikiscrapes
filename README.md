@@ -21,3 +21,9 @@ The code works as follows:
   <b> Legend: </b> <br>
   <img src="https://github.com/SwamiKannan/End-to-end-automation---Wikiscrapes/blob/main/images/legend.png">
 </p>
+
+## Usage
+### 1. Download the git file
+```
+git clone https://github.com/SwamiKannan/Wiki-3-End-to-end-automation---Wikiscrapes.git
+```
