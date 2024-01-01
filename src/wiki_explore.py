@@ -12,9 +12,9 @@ logger = logging.getLogger(__name__)
 re_mode = 0
 replacements = {'[[': '', ']]': '', '==': ''}
 
+
 # cleaner.py from https://github.com/CyberZHG Git repo:
 # https://github.com/CyberZHG/wiki-dump-reader/blob/master/wiki_dump_reader/cleaner.py
-
 
 
 # Implementation of the WikiReader class from https://jamesthorne.com/blog/processing-wikipedia-in-a-couple-of-hours/
@@ -92,7 +92,7 @@ def process_article(ctq, c1tq, arg_shutdown):
         text, categories = process_text(text)
         if "REDIRECT ".upper() not in text:
             try:
-                c1tq.put({"page": page_title, "content": text, 'categories': categories, 'url': link})
+                c1tq.put({"page": page_title, "sentences": text, 'categories': categories})
             except Exception as e:
                 print(f'Exception while processing article {page_title}; Exception: {e}')
 
@@ -165,8 +165,8 @@ def write_out(c1tq, data_path, arg_shutdown):
         details = c1tq.get()
         outfile_name = details['page']
         name = clean_name(outfile_name)
-        line = json.dumps(details, ensure_ascii=False).encode("utf-8")
-        if not os.path.exists(os.path.join(data_path, name + '.txt')):
-            with open(os.path.join(data_path, name + '.txt'), "w") as f:
-                f.write("%s\r\n" % line.strip())
+        line = json.dumps(details, ensure_ascii=False)
+        if not os.path.exists(os.path.join(data_path, name + '.json')):
+            with open(os.path.join(data_path, name + '.json'), "w", encoding='utf-8') as f:
+                f.write(line + '\n')
                 settings.count_files += 1
