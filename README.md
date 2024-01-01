@@ -1,4 +1,4 @@
-# Scrape pages pertaining to all subcategories of the category you specify
+# **Processing Wikipedia data - II: ** End to end automation of scraping Wikipedia category hierarchy, pages download and parsing
 <p align = "center">
 <img src="https://github.com/SwamiKannan/WikiCategoryScrapes/blob/main/images/cover.png"
 </p>
