@@ -56,3 +56,4 @@ Example:
 ```
 python scrape_wikicategory.py "https://en.wikipedia.org/wiki/Category:Physics" -o Physics -d 5
 ```
+### Note 4: The limitation of using this repo is that it takes longer for the download and parsing of pages. This is because Wiki Special:Export does not allow us to download 1. Pages by category or 2. Multiple pages through the API directly.
