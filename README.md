@@ -5,6 +5,17 @@
 
 **Provide the python file with any Category page from Wikipedia (The starting part of the URL is: "https://en.wikipedia.org/wiki/Category:<category name>" e.g. https://en.wikipedia.org/wiki/Category:Physics) and the file will provide you with the complete list of pages of the category as well as as all subcategories under the category provided** 
 
+## Introduction:
 My previous repositories were split into two different objectives:
 1. [Repo 1](https://github.com/SwamiKannan/Scraping-the-Wikipedia-Category-Hierarchy) - Crawl the category page and download the list of subcategories of each page - basically, map the hierarchy from the parent category
 2. [Repo 2](https://github.com/SwamiKannan/Extracting-content-from-Wikidumps-XML-files)- Extract the XML file from Wiki:Export and convert it to a JSON file
+
+There are two issues using the two repos together:
+1. There is still a manual step where you have to copy paste the page names into the Wiki [Special:Export](https://en.wikipedia.org/wiki/Special:Export) page
+2. For a large number of pages, there are issues with generating the XML file. The complete XML file was not getting generated after around 20K page names and hence, would lead to errors during the XML parsing phase
+
+## Structure:
+The code works as follows:
+<p align='center'>
+<img src="https://github.com/SwamiKannan/End-to-end-automation---Wikiscrapes/blob/main/images/final_flow.png">
+</p>
