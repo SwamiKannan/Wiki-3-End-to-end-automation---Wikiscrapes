@@ -17,5 +17,7 @@ There are two issues using the two repos together:
 ## Structure:
 The code works as follows:
 <p align='center'>
-<img src="https://github.com/SwamiKannan/End-to-end-automation---Wikiscrapes/blob/main/images/final_flow.png">
+<img src="https://github.com/SwamiKannan/End-to-end-automation---Wikiscrapes/blob/main/images/final_flow.png"><br>
+  <b> Legend: </b> <br>
+  <img src="https://github.com/SwamiKannan/End-to-end-automation---Wikiscrapes/blob/main/images/legend.png">
 </p>
