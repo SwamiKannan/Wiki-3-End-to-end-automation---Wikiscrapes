@@ -74,5 +74,5 @@ A sub directory "data":<br>
     |->page_links.txt - A text file containing the list of page **urls** that have been populated<br>
     |->done_links.txt - A text file containing the list of categories that have been identified **and traversed**. This is a reference only if we want to restart the session with the same parent Category.<br>
 
-#### Note 5: There may be two types of error that may occur:
-1. "Wikipedia overloaded with our request for pages. Pausing requests..." - This occurs because the rate at which we request Wikipedia pages may be higher than the rate at which Wikipedia agrees to deliver pages (XML files). Hence, we pause the requests to ease the load on Wikipedia.
+#### Note 5: Probable error message 
+"Wikipedia overloaded with our request for pages. Pausing requests..." - This is an error that occurs because the rate at which we request Wikipedia pages may be higher than the rate at which Wikipedia agrees to deliver pages (XML files). Hence, we pause the requests to ease the load on Wikipedia. The code with automatically handle this. No action required from the user
