@@ -45,4 +45,14 @@ pip install -r requirements.txt
    <p align = "center">
    <img src="https://github.com/SwamiKannan/Scraping_Wikipedia_categories/blob/main/images/depth_gone_wrong.png">
    </p>
- 
+
+### 4. Run the code below:
+First navigate to the 'src' directory.
+Then run the code below:
+```
+python scrape_wikicategory.py "<source category page>" -o <output_directory> (optional) -pl <max number of pages to be downloaded> -cl<max number of categories to be downloaded> -d <depth of scraping>
+```
+Example:
+```
+python scrape_wikicategory.py "https://en.wikipedia.org/wiki/Category:Physics" -o Physics -d 5
+```
