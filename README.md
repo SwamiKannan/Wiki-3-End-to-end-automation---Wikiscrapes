@@ -27,3 +27,8 @@ The code works as follows:
 ```
 git clone https://github.com/SwamiKannan/Wiki-3-End-to-end-automation---Wikiscrapes.git
 ```
+### 2. Pip install the requirements
+Through the command window, navigate to the git folder and run:
+```
+pip install -r requirements.txt
+```
