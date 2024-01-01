@@ -56,4 +56,20 @@ Example:
 ```
 python scrape_wikicategory.py "https://en.wikipedia.org/wiki/Category:Physics" -o Physics -d 5
 ```
-### Note 4: The limitation of using this repo is that it takes longer for the download and parsing of pages. This is because Wiki Special:Export does not allow us to download 1. Pages by category or 2. Multiple pages through the API directly.
+#### Note 4: The limitation of using this repo is that it takes longer for the download and parsing of pages. This is because Wiki Special:Export does not allow us to download 1. Pages by category or 2. Multiple pages through the API directly.
+
+## Output:
+A sub directory "data":<br>
+|<br>
+|-> **Folders:**<br>
+    |->xml_files folder: A folder containing xml files for all pages. One XML file per page<br>
+    |-> text_files folder: A folder containing the text/ json files for all pages: Each file contains  the following details for ONE page:<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1. page: Page title of the article<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2. sentences: Actual content in the article<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3. categories: Categories that this article belongs to<br>
+|-> **Files:**<br>
+    |-> category_names.txt - A text file containing the list of categories / sub-categories that have been identified<br>
+    |->category_links.txt - A text file containing the list of categories / sub-categories **urls** that have been identified<br>
+    |->page_names.txt - A text file containing the list of pages that have been populated<br>
+    |->page_links.txt - A text file containing the list of page **urls** that have been populated<br>
+    |->done_links.txt - A text file containing the list of categories that have been identified **and traversed**. This is a reference only if we want to restart the session with the same parent Category.<br>
