@@ -1,4 +1,4 @@
-# **Processing Wikipedia data - II: ** End to end automation of scraping Wikipedia category hierarchy, pages download and parsing
+# Processing Wikipedia data - III: End to end automation of scraping Wikipedia category hierarchy, pages download and parsing
 <p align = "center">
 <img src="https://github.com/SwamiKannan/WikiCategoryScrapes/blob/main/images/cover.png"
 </p>
@@ -55,6 +55,12 @@ python scrape_wikicategory.py "<source category page>" -o <output_directory> (op
 Example:
 ```
 python scrape_wikicategory.py "https://en.wikipedia.org/wiki/Category:Physics" -o Physics -d 5
+```
+You can access the final text files from python as follows:
+```
+with open(<path/filename.json for output file>), encoding='utf-8') as f:
+  for line in f:
+    info=json.loads(line)
 ```
 #### Note 4: The limitation of using this repo is that it takes longer for the download and parsing of pages. This is because Wiki Special:Export does not allow us to download 1. Pages by category or 2. Multiple pages through the API directly.
 
